@@ -1,0 +1,229 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* MantraCare Official Light Palette */
+    --color-mantra-navy: #0A2E5C;
+    --color-mantra-blue: #2196F3;
+    --color-mantra-blue-light: #EAF5FF;
+    --color-mantra-bg: #F7FAFD;
+    --color-mantra-card: #FFFFFF;
+    
+    --color-success: #22C55E;
+    --color-warning: #F59E0B;
+    --color-danger: #EF4444;
+
+    /* MantraCare Official Dark Mode Palette */
+    --dark-bg: #071C36;
+    --dark-card: #102A4C;
+    --dark-surface-secondary: #15365F;
+    --dark-map-ocean: #0F2748;
+    --dark-map-land: #173D69;
+    --dark-border: rgba(255, 255, 255, 0.15);
+    --dark-text-primary: #FFFFFF;
+    --dark-text-secondary: #C8D3E6;
+    --dark-text-muted: #94A3B8;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--color-mantra-bg);
+    color: #0A2E5C;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.01em;
+  }
+
+  .dark body {
+    background-color: var(--dark-bg);
+    color: var(--dark-text-primary);
+  }
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #15365F;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Kicker Eyebrow Style */
+.mantra-kicker {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2196F3;
+}
+.dark .mantra-kicker {
+  color: #60A5FA;
+}
+
+/* MantraCare Circular Icon Badge */
+.mantra-icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: #EAF5FF;
+  color: #2196F3;
+  transition: all 0.2s ease;
+}
+.dark .mantra-icon-badge {
+  background-color: rgba(33, 150, 243, 0.2);
+  color: #60A5FA;
+}
+
+/* Premium Card Styling (Rounded 18-20px, soft shadow, subtle border) */
+.mantra-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 1.25rem; /* 20px */
+  box-shadow: 0 4px 20px -2px rgba(10, 46, 92, 0.05);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+.dark .mantra-card {
+  background-color: #102A4C;
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
+}
+
+.mantra-card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -4px rgba(10, 46, 92, 0.12);
+  border-color: #93C5FD;
+}
+.dark .mantra-card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px -6px rgba(0, 0, 0, 0.6);
+  border-color: rgba(96, 165, 250, 0.4);
+}
+
+/* Official Button Styles */
+.mantra-btn-primary {
+  background-color: #2196F3;
+  color: #FFFFFF;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  box-shadow: 0 4px 14px 0 rgba(33, 150, 243, 0.39);
+  transition: all 0.2s ease;
+}
+.mantra-btn-primary:hover {
+  background-color: #1E88E5;
+  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.45);
+  transform: translateY(-1px);
+}
+
+.mantra-btn-secondary {
+  background-color: #FFFFFF;
+  color: #2196F3;
+  border: 1.5px solid #2196F3;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+.dark .mantra-btn-secondary {
+  background-color: #102A4C;
+  color: #60A5FA;
+  border-color: #3B82F6;
+}
+.mantra-btn-secondary:hover {
+  background-color: #EAF5FF;
+  transform: translateY(-1px);
+}
+.dark .mantra-btn-secondary:hover {
+  background-color: #15365F;
+}
+
+/* Pulse animation for map & AI elements */
+@keyframes softPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.08); }
+}
+.mantra-pulse {
+  animation: softPulse 2.5s infinite ease-in-out;
+}
+
+/* Background Decorative Faint Circle Motif (matching website background) */
+.mantra-bg-circles {
+  background-image: radial-gradient(circle at 10% 20%, rgba(33, 150, 243, 0.06) 0%, transparent 40%),
+                    radial-gradient(circle at 90% 80%, rgba(33, 150, 243, 0.05) 0%, transparent 40%);
+}
+.dark .mantra-bg-circles {
+  background-image: radial-gradient(circle at 10% 20%, rgba(33, 150, 243, 0.12) 0%, transparent 40%),
+                    radial-gradient(circle at 90% 80%, rgba(10, 46, 92, 0.4) 0%, transparent 40%);
+}
+
+/* Keep the executive workspace usable on phones without shrinking desktop controls. */
+.dashboard-sidebar {
+  min-height: 0;
+}
+
+.dashboard-sidebar-toggle {
+  top: 5rem;
+}
+
+.dashboard-sidebar.is-collapsed > .dashboard-sidebar-toggle {
+  top: 0.25rem;
+}
+
+@media (max-width: 1023px) {
+  html,
+  body,
+  #root {
+    overflow-x: hidden;
+  }
+
+  .dashboard-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    box-shadow: none;
+    z-index: 30;
+  }
+
+  .dashboard-sidebar.is-expanded {
+    width: min(18rem, calc(100vw - 2rem));
+    min-width: min(18rem, calc(100vw - 2rem));
+  }
+
+  .dashboard-sidebar.is-collapsed {
+    width: 3.5rem;
+    min-width: 3.5rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .mantra-card {
+    border-radius: 1rem;
+  }
+
+  .mantra-card-hover:hover {
+    transform: none;
+  }
+
+  .recharts-responsive-container {
+    min-width: 0;
+  }
+}
+
