@@ -31,12 +31,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <aside
-      className={`dashboard-sidebar ${mobileOpen ? 'is-open' : ''} ${collapsed ? 'is-collapsed' : 'is-expanded'} relative sticky top-[61px] h-[calc(100vh-61px)] bg-[#071C36] text-white border-r border-white/10 flex flex-col transition-all duration-300 z-30 shrink-0 select-none ${
-        collapsed ? 'w-16' : 'w-72'
-      }`}
+      className={`dashboard-sidebar fixed lg:sticky top-0 lg:top-[61px] bottom-0 left-0 h-full lg:h-[calc(100vh-61px)] bg-[#071C36] text-white border-r border-white/10 flex flex-col transition-all duration-300 z-50 lg:z-30 shrink-0 select-none
+        ${collapsed ? 'lg:w-16' : 'lg:w-72'} 
+        ${mobileOpen ? 'translate-x-0 w-72' : '-translate-x-full lg:translate-x-0 w-72'}
+      `}
     >
       {/* Search Header */}
-      {!collapsed && (
+      {(!collapsed || mobileOpen) && (
         <div className="p-3 border-b border-white/10 bg-[#092345]">
           <div className="relative">
             <Icons.Search className="w-3.5 h-3.5 text-blue-300 absolute left-3 top-2.5" />
@@ -45,7 +46,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search executive hub..."
-              className="w-full pl-8 pr-7 py-1.5 bg-[#0F325E] text-white placeholder-blue-300/60 text-xs rounded-xl border border-blue-400/20 focus:outline-none focus:border-blue-400 font-medium"
+              className="w-full pl-8 pr-7 py-1.5 bg-[#0F325E] text-white placeholder-blue-300/60 text-sm rounded-xl border border-blue-400/20 focus:outline-none focus:border-blue-400 font-medium"
             />
             {searchTerm && (
               <button
@@ -62,7 +63,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <button
         type="button"
         onClick={onToggleCollapse}
-        className="dashboard-sidebar-toggle absolute right-0 translate-x-1/2 w-[26px] h-[26px] min-w-[26px] min-h-[26px] rounded-full bg-white border border-slate-200 shadow-sm text-[#071C36] hover:bg-slate-100 transition-colors flex items-center justify-center z-[70] shrink-0"
+        className="dashboard-sidebar-toggle hidden lg:flex absolute right-0 translate-x-1/2 w-[26px] h-[26px] min-w-[26px] min-h-[26px] rounded-full bg-white border border-slate-200 shadow-sm text-[#071C36] hover:bg-slate-100 transition-colors items-center justify-center z-[70] shrink-0"
         title={collapsed ? 'Expand Executive Sidebar' : 'Collapse Executive Sidebar'}
         aria-label={collapsed ? 'Expand Executive Sidebar' : 'Collapse Executive Sidebar'}
       >
@@ -72,8 +73,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* 7 Primary Executive Navigation Items */}
       <div className={`relative z-0 flex-1 overflow-y-auto custom-scrollbar ${collapsed ? 'p-2 space-y-2' : 'p-3 space-y-2'}`}>
         <div className="px-2 py-1">
-          {!collapsed && (
-            <div className="text-[10px] font-extrabold text-blue-300/80 uppercase tracking-widest">
+          {(!collapsed || mobileOpen) && (
+            <div className="text-xs font-extrabold text-blue-300/80 uppercase tracking-widest">
               Executive Command Center
             </div>
           )}
@@ -104,10 +105,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
               }}
               title={collapsed ? `${item.emoji} ${item.title} — ${item.description}` : undefined}
               className={`${
-                collapsed
+                (collapsed && !mobileOpen)
                   ? 'w-9 h-9 mx-auto p-0 rounded-xl flex items-center justify-center'
                   : 'w-full flex items-center p-3 rounded-2xl'
-              } text-xs font-semibold transition-all group relative overflow-hidden isolate shrink-0 box-border ${
+              } text-sm font-semibold transition-all group relative overflow-hidden isolate shrink-0 box-border ${
                 isSelected
                   ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/30'
                   : 'text-slate-200 hover:bg-[#102A4C] hover:text-white'
@@ -124,9 +125,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <ItemIcon className="w-4 h-4" />
               </div>
 
-              {!collapsed && (
+              {(!collapsed || mobileOpen) && (
                 <div className="ml-3 text-left truncate flex-1 min-w-0">
-                  <div className="truncate text-xs font-bold tracking-tight">{item.title}</div>
+                  <div className="truncate text-sm font-bold tracking-tight">{item.title}</div>
                 </div>
               )}
             </button>
@@ -137,7 +138,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Sidebar Footer */}
       <div className="p-3 border-t border-white/10 bg-[#06172E] flex items-center justify-between">
-        {!collapsed && (
+        {(!collapsed || mobileOpen) && (
           <div className="text-[11px] text-blue-200/80 font-bold flex items-center space-x-1.5">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span>MantraCare Executive SaaS</span>

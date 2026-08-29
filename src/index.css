@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+@theme {
+  --text-xs: 0.8125rem; /* 13px (was 12px) */
+  --text-sm: 0.9375rem; /* 15px (was 14px) */
+  --text-base: 1.0625rem; /* 17px (was 16px) */
+  --text-lg: 1.1875rem; /* 19px (was 18px) */
+  --text-xl: 1.375rem; /* 22px (was 20px) */
+  --text-2xl: 1.625rem; /* 26px (was 24px) */
+  --text-3xl: 2.125rem; /* 34px (was 30px) */
+  --text-4xl: 2.625rem; /* 42px (was 36px) */
+  --text-5xl: 3.25rem; /* 52px (was 48px) */
+}
+
 @layer base {
   :root {
     /* MantraCare Official Light Palette */
@@ -33,6 +45,7 @@
     padding: 0;
     -webkit-font-smoothing: antialiased;
     letter-spacing: -0.01em;
+    line-height: 1.5;
   }
 
   .dark body {
@@ -69,7 +82,8 @@
 
 /* Kicker Eyebrow Style */
 .mantra-kicker {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
+  line-height: 1.25;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -194,23 +208,7 @@
     overflow-x: hidden;
   }
 
-  .dashboard-sidebar {
-    position: sticky;
-    top: 0;
-    height: 100dvh;
-    box-shadow: none;
-    z-index: 30;
-  }
-
-  .dashboard-sidebar.is-expanded {
-    width: min(18rem, calc(100vw - 2rem));
-    min-width: min(18rem, calc(100vw - 2rem));
-  }
-
-  .dashboard-sidebar.is-collapsed {
-    width: 3.5rem;
-    min-width: 3.5rem;
-  }
+  /* Cleaned up custom sidebar styles to let Tailwind responsive styles manage width and placement */
 }
 
 @media (max-width: 639px) {

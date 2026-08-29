@@ -1,5 +1,18 @@
 export type DateRangeOption = 'Q1 2026' | 'Q2 2026' | 'YTD 2026' | 'Trailing 12 Months' | '5-Year Projection';
 
+export type ProgramId =
+  | 'all-programs'
+  | 'eap'
+  | 'virtual-care'
+  | 'health-checks'
+  | 'nutrition-fitness'
+  | 'challenges'
+  | 'wellness-camp'
+  | 'diabetes-care'
+  | 'maternity-paternity'
+  | 'women-wellness'
+  | 'physiotherapy';
+
 export type EnterpriseOrg = {
   id: string;
   name: string;
@@ -153,7 +166,7 @@ export type DrillDownData = {
 
 export type AIRecommendation = {
   id: string;
-  type: '🚨 High Burnout' | '⚠️ Low Adoption' | '💰 ROI Opportunity' | '🏥 Claims Alert' | '📈 Retention Risk';
+  type: string;
   title: string;
   teaser: string;
   priority: 'Critical' | 'High' | 'Medium' | 'Strategic';

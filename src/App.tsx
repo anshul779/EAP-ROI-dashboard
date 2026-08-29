@@ -15,17 +15,21 @@ import { AIRecommendationEngineModule } from './components/modules/AIRecommendat
 import { ReportsModule } from './components/modules/ReportsModule';
 
 
-import type { FilterState, ModuleId, KPICardData } from './types';
+import type { FilterState, ModuleId, KPICardData, ProgramId } from './types';
 import { MODULE_DEFS, ORGANIZATIONS } from './data/mockData';
 import * as Icons from 'lucide-react';
 import { InfoTooltip } from './components/common/InfoTooltip';
 import { dashboardInfo } from './data/dashboardInfo';
+import { ORG_ENABLED_PROGRAMS, getProgramConfig, getAllProgramsSummary } from './data/programsConfig';
 
 export function App() {
   const [activeModule, setActiveModule] = useState<ModuleId>('exec-summary');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [darkMode] = useState(false);
+
+  // Wellness Program Selection State
+  const [selectedProgram, setSelectedProgram] = useState<ProgramId>('all-programs');
 
   // Modals & Drawers
   const [isFilterBarOpen, setIsFilterBarOpen] = useState(false);
@@ -64,6 +68,14 @@ export function App() {
     }
   }, [darkMode]);
 
+  // Sync program filter based on enabled programs for selected organization
+  useEffect(() => {
+    const enabled = ORG_ENABLED_PROGRAMS[filters.organizationId] || [];
+    if (selectedProgram !== 'all-programs' && !enabled.includes(selectedProgram)) {
+      setSelectedProgram('all-programs');
+    }
+  }, [filters.organizationId]);
+
   const handleFilterChange = (updated: Partial<FilterState>) => {
     setFilters((prev) => ({ ...prev, ...updated }));
   };
@@ -94,49 +106,88 @@ export function App() {
   const currentOrg = ORGANIZATIONS.find((o) => o.id === filters.organizationId) || ORGANIZATIONS[0];
   const currentModuleInfo = dashboardInfo.modules[currentModuleDef.id as keyof typeof dashboardInfo.modules];
 
+  // Dynamic Kicker and Title
+  const getModuleTitle = () => {
+    if (selectedProgram === 'all-programs') {
+      return `${currentModuleDef.title} — All Programs`;
+    }
+    const config = getProgramConfig(selectedProgram);
+    return `${currentModuleDef.title} — ${config.name}`;
+  };
+
+  const getModuleKicker = () => {
+    if (selectedProgram === 'all-programs') {
+      return 'WORKFORCE PORTFOLIO SUMMARY';
+    }
+    const config = getProgramConfig(selectedProgram);
+    return config.kicker;
+  };
+
+  // Dynamic Overall ROI calculation
+  const enabledProgramIds = ORG_ENABLED_PROGRAMS[filters.organizationId] || [];
+  const programSummary = getAllProgramsSummary(enabledProgramIds, currentOrg.totalEmployees);
+  let currentRoiDisplay = '';
+  if (selectedProgram === 'all-programs') {
+    currentRoiDisplay = `${programSummary.roiRatio.toFixed(2)}× Portfolio ROI`;
+  } else {
+    const config = getProgramConfig(selectedProgram);
+    const cost = config.roiFormula.programCost;
+    const totalReturn = config.roiFormula.healthcareCostReduction + config.roiFormula.reducedAbsenteeism + config.roiFormula.reducedPresenteeism + config.roiFormula.reducedTurnover + config.roiFormula.productivityGain;
+    const ratio = cost > 0 ? totalReturn / cost : 0;
+    currentRoiDisplay = `${ratio.toFixed(2)}× ROI`;
+  }
+
   const renderModuleContent = () => {
     // 1. Executive Overview
     if (['exec-summary', 'workforce-score', 'exec-insights', 'ai-daily-brief'].includes(activeModule)) {
-      return <ExecutiveSummaryModule onDrillDown={(card) => setDrillDownCard(card)} />;
+      return <ExecutiveSummaryModule onDrillDown={(card) => setDrillDownCard(card)} selectedProgram={selectedProgram} filters={filters} />;
     }
 
     // 2. Business Impact
     if (['business-impact', 'roi-dashboard', 'financial-roi', 'voi-dashboard', 'benchmarks', 'healthcare-savings', 'claims-costs', 'productivity-impact'].includes(activeModule)) {
-      return <FinancialROIModule onDrillDown={(card) => setDrillDownCard(card)} />;
+      return <FinancialROIModule onDrillDown={(card) => setDrillDownCard(card)} selectedProgram={selectedProgram} filters={filters} />;
     }
 
     // 3. Workforce Health
     if (['workforce-health', 'population-health', 'mental-health', 'physical-wellbeing', 'preventive-health', 'chronic-disease', 'risk-segmentation', 'womens-health', 'clinical-improvements', 'clinical-outcomes', 'assessments', 'recovery-tracking', 'wellness-programs', 'crisis-management'].includes(activeModule)) {
-      return <WorkforceHealthModule onDrillDown={(card) => setDrillDownCard(card)} />;
+      return <WorkforceHealthModule onDrillDown={(card) => setDrillDownCard(card)} selectedProgram={selectedProgram} filters={filters} />;
     }
 
     // 4. Employee Experience
     if (['employee-experience', 'eap-adoption', 'employee-engagement', 'employee-journey', 'therapy-coaching', 'care-utilisation', 'teleconsultation', 'digital-resources', 'self-care'].includes(activeModule)) {
-      return <EmployeeEngagementModule onDrillDown={(card) => setDrillDownCard(card)} />;
+      return <EmployeeEngagementModule onDrillDown={(card) => setDrillDownCard(card)} selectedProgram={selectedProgram} filters={filters} />;
     }
 
     // 5. Organization Insights
     if (['organization-insights', 'global-offices', 'global-analytics', 'manager-effectiveness', 'manager-dashboard', 'dept-analytics', 'demographics', 'population-insights', 'campaigns'].includes(activeModule)) {
-      return <GlobalAnalyticsModule onDrillDown={(card) => setDrillDownCard(card)} />;
+      return <GlobalAnalyticsModule onDrillDown={(card) => setDrillDownCard(card)} selectedProgram={selectedProgram} filters={filters} />;
     }
 
     // 6. AI Intelligence
     if (['ai-intelligence', 'ai-coach', 'ai-insights', 'ai-recommendations', 'predictive-analytics', 'burnout-prediction', 'workforce-alerts'].includes(activeModule)) {
-      return <AIRecommendationEngineModule />;
+      return <AIRecommendationEngineModule selectedProgram={selectedProgram} filters={filters} />;
     }
 
     // 7. Reports & Admin
     if (['reports-admin', 'executive-reports', 'board-reports', 'dept-reports', 'scheduled-reports', 'export-center', 'admin-programs', 'admin-users', 'admin-integrations', 'admin-permissions', 'admin-settings'].includes(activeModule)) {
-      return <ReportsModule onOpenExport={() => setIsExportOpen(true)} activeSubTab={activeModule} />;
+      return <ReportsModule onOpenExport={() => setIsExportOpen(true)} activeSubTab={activeModule} selectedProgram={selectedProgram} filters={filters} />;
     }
 
     // Fallback
-    return <ExecutiveSummaryModule onDrillDown={(card) => setDrillDownCard(card)} />;
+    return <ExecutiveSummaryModule onDrillDown={(card) => setDrillDownCard(card)} selectedProgram={selectedProgram} filters={filters} />;
   };
 
 
   return (
     <div className="min-h-screen bg-[#F7FAFD] dark:bg-[#071C36] text-[#0A2E5C] dark:text-white flex flex-col font-sans transition-colors duration-200 mantra-bg-circles relative">
+      {/* Mobile Sidebar Overlay Backdrop */}
+      {mobileSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-40 lg:hidden cursor-pointer"
+          onClick={() => setMobileSidebarOpen(false)}
+        />
+      )}
+
       {/* Top Header */}
       <Header
         filters={filters}
@@ -150,6 +201,8 @@ export function App() {
           });
         }}
         darkMode={darkMode}
+        selectedProgram={selectedProgram}
+        onProgramChange={setSelectedProgram}
       />
 
       {/* Compare Mode Banner Overlay */}
@@ -220,10 +273,10 @@ export function App() {
           <div className="bg-[#0A2E5C] text-white pb-5 sm:pb-6 pt-3 sm:pt-4 px-4 sm:px-6 md:px-8 relative">
             <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                <div className="mantra-kicker text-blue-300">{currentModuleDef.kicker}</div>
+                <div className="mantra-kicker text-blue-300">{getModuleKicker()}</div>
                 <div className="flex items-center gap-1.5">
-                  <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight mt-1 break-words">
-                    {currentModuleDef.title}
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight mt-1 break-words leading-tight">
+                    {getModuleTitle()}
                   </h1>
                   {currentModuleInfo && (
                     <InfoTooltip
@@ -233,7 +286,7 @@ export function App() {
                     />
                   )}
                 </div>
-                <p className="text-xs md:text-sm text-blue-200/80 mt-1 max-w-3xl">
+                <p className="text-sm md:text-base text-blue-200/80 mt-1 max-w-3xl leading-relaxed">
                   {currentModuleDef.description}
                 </p>
               </div>
@@ -244,8 +297,8 @@ export function App() {
                   <Icons.Award className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-[10px] text-blue-300 font-bold uppercase">{currentOrg.name}</div>
-                  <div className="text-sm font-extrabold text-white">4.88× Overall ROI</div>
+                  <div className="text-xs text-blue-300 font-bold uppercase">{currentOrg.name}</div>
+                  <div className="text-base font-extrabold text-white">{currentRoiDisplay}</div>
                 </div>
               </div>
             </div>

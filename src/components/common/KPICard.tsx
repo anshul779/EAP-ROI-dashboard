@@ -29,7 +29,7 @@ export const KPICard: React.FC<KPICardProps> = ({
     <div
       onClick={() => onDrillDown && onDrillDown(data)}
       className={`mantra-card mantra-card-hover relative flex flex-col justify-between cursor-pointer group overflow-hidden ${
-        isHero ? 'p-6 md:p-8' : 'p-6'
+        isHero ? 'px-4 py-5 sm:p-6 md:p-8' : 'px-4 py-5 sm:p-6'
       }`}
     >
       {/* Texture background motif */}
@@ -61,7 +61,7 @@ export const KPICard: React.FC<KPICardProps> = ({
               {data.prefix}
             </span>
           )}
-          <span className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white font-sans">
+          <span className="text-3xl sm:text-4xl lg:text-3xl xl:text-4xl font-black tracking-tight text-slate-900 dark:text-white font-sans truncate">
             {data.value}
           </span>
           {data.suffix && (

@@ -1,8 +1,14 @@
 import React from 'react';
 import * as Icons from 'lucide-react';
-import { generateExecutiveInsights } from '../../data/insightRules';
+import type { ProgramId } from '../../types';
+import { getProgramConfig, ORG_ENABLED_PROGRAMS, getAllProgramsSummary } from '../../data/programsConfig';
 import { InfoTooltip } from './InfoTooltip';
 import { dashboardInfo } from '../../data/dashboardInfo';
+
+interface SummaryPanelProps {
+  selectedProgram: ProgramId;
+  organizationId: string;
+}
 
 const insightIcons: Record<string, React.ElementType> = {
   TrendingUp: Icons.TrendingUp,
@@ -22,8 +28,48 @@ const insightColors: Record<string, string> = {
   Target: 'text-cyan-500',
 };
 
-export const ExecutiveAISummaryPanel: React.FC = () => {
-  const insights = generateExecutiveInsights();
+export const ExecutiveAISummaryPanel: React.FC<SummaryPanelProps> = ({ selectedProgram, organizationId }) => {
+  // Load insights dynamically
+  let insights: { icon: string; text: string; highlight: string }[] = [];
+  let headerTitle = '';
+  let kickerText = '';
+
+  if (selectedProgram === 'all-programs') {
+    kickerText = '🤖 PORTFOLIO HEALTH INSIGHTS';
+    headerTitle = 'Enterprise Wellness Program Portfolio Synthesis';
+    
+    // Construct dynamic insights for the whole portfolio
+    const enabled = ORG_ENABLED_PROGRAMS[organizationId] || [];
+    const summary = getAllProgramsSummary(enabled);
+    
+    insights = [
+      {
+        icon: 'TrendingUp',
+        text: `Portfolio-wide ROI is active at ${summary.roiRatio.toFixed(2)}x across ${enabled.length} enabled wellness programs.`,
+        highlight: `${summary.roiRatio.toFixed(2)}x ROI`
+      },
+      {
+        icon: 'DollarSign',
+        text: `Total wellness savings reach $${summary.totalReturn.toLocaleString()} with a net gain of $${summary.netSavings.toLocaleString()} over total budget.`,
+        highlight: `$${summary.netSavings.toLocaleString()} Net`
+      },
+      {
+        icon: 'Users',
+        text: `Average workforce program reach is at ${summary.averageParticipation}% with ${summary.activeParticipantsCount.toLocaleString()} cumulative active loggers.`,
+        highlight: `${summary.averageParticipation}% reach`
+      },
+      {
+        icon: 'Target',
+        text: `Top performing modules: EAP and Nutrition & Fitness drive 65% of the total organizational cost avoidance.`,
+        highlight: 'EAP & Nutrition'
+      }
+    ];
+  } else {
+    const config = getProgramConfig(selectedProgram);
+    kickerText = `🤖 EXECUTIVE ${config.name.toUpperCase()} INSIGHTS`;
+    headerTitle = `${config.name} ROI, Utilisation & Workforce Impact Overview`;
+    insights = config.aiInsights;
+  }
 
   return (
     <div className="mantra-card p-6 md:p-8 border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50/90 via-white to-blue-50/60 dark:from-[#15365F] dark:via-[#102A4C] dark:to-[#071C36] relative overflow-hidden shadow-lg">
@@ -36,7 +82,7 @@ export const ExecutiveAISummaryPanel: React.FC = () => {
           <div className="space-y-3">
             <div className="flex items-center space-x-2">
               <span className="mantra-kicker text-purple-600 dark:text-purple-400">
-                🤖 EXECUTIVE EAP INSIGHTS
+                {kickerText}
               </span>
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300">
                 Data-Driven
@@ -45,7 +91,7 @@ export const ExecutiveAISummaryPanel: React.FC = () => {
 
             <div className="flex items-center gap-1.5">
               <h2 className="text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                EAP ROI, Utilisation & Clinical Performance Overview
+                {headerTitle}
               </h2>
               <InfoTooltip title={dashboardInfo.aiInsights.title} description={dashboardInfo.aiInsights.description} />
             </div>
