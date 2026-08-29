@@ -75,10 +75,7 @@ export const ExecutiveAISummaryPanel: React.FC<SummaryPanelProps> = ({ selectedP
     <div className="mantra-card p-6 md:p-8 border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50/90 via-white to-blue-50/60 dark:from-[#15365F] dark:via-[#102A4C] dark:to-[#071C36] relative overflow-hidden shadow-lg">
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
         <div className="flex items-start space-x-4">
-          <div
-            className="w-12 h-12 rounded-2xl bg-purple-600 text-white flex items-center justify-center shrink-0 shadow-lg shadow-purple-500/30 mantra-pulse"
-            title="MantraCare AI Intelligence & Recommendation Engine"
-          >
+          <div className="w-12 h-12 rounded-2xl bg-purple-600 text-white flex items-center justify-center shrink-0 shadow-lg shadow-purple-500/30 mantra-pulse">
             <Icons.Bot className="w-7 h-7 stroke-[2]" />
           </div>
 
@@ -87,10 +84,7 @@ export const ExecutiveAISummaryPanel: React.FC<SummaryPanelProps> = ({ selectedP
               <span className="mantra-kicker text-purple-600 dark:text-purple-400">
                 {kickerText}
               </span>
-              <span
-                className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300"
-                title="Synthesized using real-time machine learning telemetry and clinical data"
-              >
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300">
                 Data-Driven
               </span>
             </div>
@@ -109,7 +103,6 @@ export const ExecutiveAISummaryPanel: React.FC<SummaryPanelProps> = ({ selectedP
                 return (
                   <div
                     key={idx}
-                    title={`AI Finding (${insight.highlight}): ${insight.text}`}
                     className="flex items-center space-x-2 p-2.5 rounded-xl bg-white/80 dark:bg-[#102A4C]/80 border border-slate-200/60 dark:border-white/10 hover:border-purple-300 dark:hover:border-purple-500 transition-colors"
                   >
                     <Icon className={`w-4 h-4 ${color} shrink-0`} />

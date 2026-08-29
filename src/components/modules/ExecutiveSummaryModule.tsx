@@ -214,10 +214,7 @@ export const ExecutiveSummaryModule: React.FC<Props> = ({ onDrillDown, selectedP
                     Cumulative Wellness Savings vs Budget
                   </h3>
                 </div>
-                <span
-                  className="px-3.5 py-1 rounded-full text-xs font-extrabold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300"
-                  title="Net yield percentage earned across all active wellness investments"
-                >
+                <span className="px-3.5 py-1 rounded-full text-xs font-extrabold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">
                   +{summary.roiPercent.toFixed(1)}% Net Yield
                 </span>
               </div>
@@ -226,10 +223,7 @@ export const ExecutiveSummaryModule: React.FC<Props> = ({ onDrillDown, selectedP
               </p>
             </div>
 
-            <div
-              className="h-72 w-full"
-              title="Historical portfolio ROI trend chart comparing savings vs costs"
-            >
+            <div className="h-72 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={aggregatedTrend} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                   <defs>
@@ -277,19 +271,15 @@ export const ExecutiveSummaryModule: React.FC<Props> = ({ onDrillDown, selectedP
               <table className="w-full text-left text-xs">
                 <thead>
                   <tr className="border-b border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">
-                    <th className="pb-3" title="Name of active program">Program</th>
-                    <th className="pb-3 text-right" title="Percentage of workforce enrolled">Participation</th>
-                    <th className="pb-3 text-right" title="Engagement score across modules">Engagement</th>
-                    <th className="pb-3 text-right" title="Return on investment ratio">ROI</th>
+                    <th className="pb-3">Program</th>
+                    <th className="pb-3 text-right">Participation</th>
+                    <th className="pb-3 text-right">Engagement</th>
+                    <th className="pb-3 text-right">ROI</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 dark:divide-white/10">
                   {enabledTableRows.map((row) => (
-                    <tr
-                      key={row.id}
-                      title={`${row.name}: ${row.participation} participation | ${row.engagement} engagement | ${row.roi} ROI`}
-                      className="hover:bg-blue-50/50 dark:hover:bg-[#15365F]/40 transition-colors"
-                    >
+                    <tr key={row.id} className="hover:bg-blue-50/50 dark:hover:bg-[#15365F]/40 transition-colors">
                       <td className="py-3 font-bold text-slate-900 dark:text-white truncate max-w-[100px]">{row.name}</td>
                       <td className="py-3 text-right text-slate-600 dark:text-slate-300 font-medium">{row.participation}</td>
                       <td className="py-3 text-right font-semibold text-[#2196F3]">{row.engagement}</td>
