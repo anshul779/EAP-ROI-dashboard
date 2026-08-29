@@ -271,7 +271,7 @@ export function App() {
         <main className="flex-1 overflow-x-hidden min-w-0">
           {/* Top Organic Wave Accent Band */}
           <div className="bg-[#0A2E5C] text-white pb-5 sm:pb-6 pt-3 sm:pt-4 px-4 sm:px-6 md:px-8 relative">
-            <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <div className="mantra-kicker text-blue-300">{getModuleKicker()}</div>
                 <div className="flex items-center gap-1.5">
@@ -308,7 +308,7 @@ export function App() {
           <WaveDivider fillColor={darkMode ? '#061B36' : '#F8FAFC'} />
 
           {/* Module Component Rendering Canvas */}
-          <div className="p-3 sm:p-4 md:p-8 max-w-[1600px] mx-auto space-y-5 sm:space-y-8">
+          <div className="p-3 sm:p-4 md:p-8 space-y-5 sm:space-y-8">
             {renderModuleContent()}
           </div>
         </main>

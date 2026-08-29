@@ -104,7 +104,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="sticky top-0 z-40 bg-white dark:bg-[#071C36] text-slate-900 dark:text-white shadow-md border-b border-slate-200 dark:border-white/10 transition-colors">
-      <div className="max-w-[1700px] mx-auto px-3 sm:px-4 md:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-4 flex-wrap">
+      <div className="px-3 sm:px-4 md:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-4 flex-wrap">
         {/* Official MantraCare Brand Logo */}
         <div className="flex items-center space-x-2 sm:space-x-3 shrink-0 min-w-0">
           <button
@@ -295,24 +295,36 @@ export const Header: React.FC<HeaderProps> = ({
 
 
           {/* Global Filter Drawer Button */}
-          <button
-            type="button"
-            onClick={onOpenGlobalFilters}
-            className="flex items-center space-x-1.5 px-3.5 py-2 mantra-btn-primary text-sm shrink-0"
-          >
-            <Icons.SlidersHorizontal className="w-4 h-4" />
-            <span className="hidden md:inline">Filters</span>
-          </button>
+          <div className="relative group">
+            <button
+              type="button"
+              onClick={onOpenGlobalFilters}
+              className="flex items-center space-x-1.5 px-3.5 py-2 mantra-btn-primary text-sm shrink-0"
+              title="Advanced filters for demographics, departments, risk levels, and more"
+            >
+              <Icons.SlidersHorizontal className="w-4 h-4" />
+              <span className="hidden md:inline">Filters</span>
+            </button>
+            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+              Advanced filters
+            </div>
+          </div>
 
           {/* Export Report Button */}
-          <button
-            type="button"
-            onClick={onOpenExport}
-            className="flex items-center space-x-1.5 px-3.5 py-2 mantra-btn-secondary text-sm shrink-0"
-          >
-            <Icons.Download className="w-4 h-4" />
-            <span className="hidden lg:inline">Export Board PDF</span>
-          </button>
+          <div className="relative group">
+            <button
+              type="button"
+              onClick={onOpenExport}
+              className="flex items-center space-x-1.5 px-3.5 py-2 mantra-btn-secondary text-sm shrink-0"
+              title="Export dashboard as board-ready PDF or Excel"
+            >
+              <Icons.Download className="w-4 h-4" />
+              <span className="hidden lg:inline">Export Board PDF</span>
+            </button>
+            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+              Export as PDF or Excel
+            </div>
+          </div>
 
 
         </div>
