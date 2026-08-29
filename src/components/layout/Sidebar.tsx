@@ -103,7 +103,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 onSelectModule(item.id);
                 onCloseMobile();
               }}
-              title={collapsed && !mobileOpen ? item.title : undefined}
+              title={item.title}
               className={`${
                 (collapsed && !mobileOpen)
                   ? 'w-9 h-9 mx-auto p-0 rounded-xl flex items-center justify-center'
