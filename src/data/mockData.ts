@@ -140,15 +140,6 @@ export const PRIMARY_NAV_ITEMS: {
     badge: '6 Regions',
   },
   {
-    id: 'ai-intelligence',
-    title: 'AI Intelligence',
-    kicker: 'PREDICTIVE ACTION FEED',
-    emoji: '🤖',
-    iconName: 'Sparkles',
-    description: 'Conversational AI coach summary, prescriptive enterprise action feed, and 30-60 day burnout early warning.',
-    badge: '5 Actions',
-  },
-  {
     id: 'reports-admin',
     title: 'Reports',
     kicker: 'BOARD DECKS & GOVERNANCE',
@@ -156,6 +147,15 @@ export const PRIMARY_NAV_ITEMS: {
     iconName: 'FileText',
     description: '1-click PowerPoint Board Deck generator, PDF executive reports, HRIS integrations, and HIPAA privacy rules.',
     badge: 'Export Hub',
+  },
+  {
+    id: 'ai-intelligence',
+    title: 'AI Intelligence',
+    kicker: 'PREDICTIVE ACTION FEED',
+    emoji: '🤖',
+    iconName: 'Sparkles',
+    description: 'Conversational AI coach summary, prescriptive enterprise action feed, and 30-60 day burnout early warning.',
+    badge: '5 Actions',
   },
 ];
 
