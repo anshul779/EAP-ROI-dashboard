@@ -50,6 +50,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, filte
           </div>
           <button
             onClick={onClose}
+            title="Close export dialog"
             className="p-2 rounded-full hover:bg-blue-900/60 text-blue-200 hover:text-white transition-colors"
           >
             <Icons.X className="w-6 h-6" />
@@ -73,6 +74,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, filte
                   key={fmt.id}
                   type="button"
                   onClick={() => setFormat(fmt.id as any)}
+                  title={`Export report format: ${fmt.label} (${fmt.desc})`}
                   className={`p-3 rounded-xl border text-left transition-all ${
                     format === fmt.id
                       ? 'bg-blue-50 dark:bg-blue-900/60 border-blue-600 dark:border-blue-400 ring-2 ring-blue-500/30'
@@ -99,6 +101,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, filte
               {Object.entries(selectedSections).map(([key, val]) => (
                 <label
                   key={key}
+                  title={`Include ${key.replace(/([A-Z])/g, ' $1')} section in output report`}
                   className="flex items-center space-x-2.5 p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-blue-900/60 cursor-pointer"
                 >
                   <input
@@ -118,7 +121,10 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, filte
           </div>
 
           {/* Filter Scope Preview */}
-          <div className="p-3 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-100 dark:border-blue-900/80 text-xs text-blue-900 dark:text-blue-200 flex items-center justify-between">
+          <div
+            title="Scope parameters applied to this exported document"
+            className="p-3 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-100 dark:border-blue-900/80 text-xs text-blue-900 dark:text-blue-200 flex items-center justify-between cursor-help"
+          >
             <span>
               Scope: <strong>{filters.dateRange}</strong> | Org:{' '}
               <strong>{filters.organizationId}</strong>
@@ -134,6 +140,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, filte
           <button
             type="button"
             onClick={onClose}
+            title="Cancel export"
             className="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-blue-800 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
           >
             Cancel
@@ -142,6 +149,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, filte
             type="button"
             disabled={isExporting || exportComplete}
             onClick={handleExport}
+            title="Generate and download selected executive report"
             className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition-all flex items-center space-x-2 disabled:opacity-50"
           >
             {isExporting ? (

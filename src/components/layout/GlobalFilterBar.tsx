@@ -48,6 +48,7 @@ export const GlobalFilterBar: React.FC<GlobalFilterBarProps> = ({
           </div>
           <button
             onClick={onClose}
+            title="Close global filter drawer"
             className="p-2 rounded-full hover:bg-blue-900/60 text-blue-200 hover:text-white transition-colors"
           >
             <Icons.X className="w-6 h-6" />
@@ -56,7 +57,10 @@ export const GlobalFilterBar: React.FC<GlobalFilterBarProps> = ({
 
         {/* Filter Controls Grid */}
         <div className="p-6 space-y-6 flex-1">
-          <div className="p-4 rounded-xl bg-blue-50 dark:bg-blue-950/50 border border-blue-100 dark:border-blue-900/60 text-xs text-blue-800 dark:text-blue-200 flex items-center space-x-3">
+          <div
+            title="Privacy Compliance: Anonymization automatically enforced for employee privacy"
+            className="p-4 rounded-xl bg-blue-50 dark:bg-blue-950/50 border border-blue-100 dark:border-blue-900/60 text-xs text-blue-800 dark:text-blue-200 flex items-center space-x-3 cursor-help"
+          >
             <Icons.ShieldCheck className="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0" />
             <span>
               All filtered outputs strictly preserve HIPAA / GDPR employee anonymity. Minimum group size threshold (n ≥ 10) enforced.
@@ -72,6 +76,7 @@ export const GlobalFilterBar: React.FC<GlobalFilterBarProps> = ({
                 <select
                   value={(filters as any)[item.key] || item.options[0]}
                   onChange={(e) => onFilterChange({ [item.key]: e.target.value })}
+                  title={`Filter workforce population by ${item.label}`}
                   className="w-full p-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-blue-900 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 >
                   {item.options.map((opt) => (
@@ -90,6 +95,7 @@ export const GlobalFilterBar: React.FC<GlobalFilterBarProps> = ({
           <button
             type="button"
             onClick={onResetFilters}
+            title="Reset all filters back to default parameters"
             className="px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-400 transition-colors flex items-center space-x-1"
           >
             <Icons.RotateCcw className="w-3.5 h-3.5" />
@@ -99,6 +105,7 @@ export const GlobalFilterBar: React.FC<GlobalFilterBarProps> = ({
           <button
             type="button"
             onClick={onClose}
+            title="Apply multi-dimensional filters to all executive dashboards"
             className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm shadow-lg transition-colors flex items-center space-x-2"
           >
             <Icons.Check className="w-4 h-4" />

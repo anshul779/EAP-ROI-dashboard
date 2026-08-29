@@ -50,9 +50,13 @@ export const Scorecard3Col: React.FC<Scorecard3ColProps> = ({
           return (
             <div
               key={idx}
+              title={`${item.title}${item.badge ? ` (${item.badge})` : ''}: ${item.description}`}
               className="flex items-start space-x-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800/80 hover:border-blue-200 dark:hover:border-blue-800 transition-colors"
             >
-              <div className="mantra-icon-badge w-12 h-12 shrink-0">
+              <div
+                className="mantra-icon-badge w-12 h-12 shrink-0"
+                title={`${item.title} indicator`}
+              >
                 <IconComp className="w-6 h-6 stroke-[1.75]" />
               </div>
               <div>
@@ -61,7 +65,10 @@ export const Scorecard3Col: React.FC<Scorecard3ColProps> = ({
                     {item.title}
                   </h3>
                   {item.badge && (
-                    <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300">
+                    <span
+                      className="px-2 py-0.5 rounded-full text-xs font-bold bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300"
+                      title={`Metric status: ${item.badge}`}
+                    >
                       {item.badge}
                     </span>
                   )}

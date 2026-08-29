@@ -52,7 +52,10 @@ export const DrillDownModal: React.FC<DrillDownModalProps> = ({ cardData, onClos
             <div className="mantra-kicker text-blue-300">EXECUTIVE DRILL-DOWN ANALYTICS</div>
             <div className="flex items-center space-x-3 mt-1">
               <h2 className="text-2xl font-bold">{cardData.title}</h2>
-              <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-blue-500 text-white shadow">
+              <span
+                className="px-3 py-1 rounded-full text-xs font-extrabold bg-blue-500 text-white shadow"
+                title={`Current baseline value for ${cardData.title}`}
+              >
                 Current: {cardData.value}
               </span>
             </div>
@@ -62,6 +65,7 @@ export const DrillDownModal: React.FC<DrillDownModalProps> = ({ cardData, onClos
           </div>
           <button
             onClick={onClose}
+            title="Close drill down panel"
             className="p-2 rounded-full hover:bg-blue-900/60 text-blue-200 hover:text-white transition-colors"
           >
             <Icons.X className="w-6 h-6" />
@@ -79,6 +83,7 @@ export const DrillDownModal: React.FC<DrillDownModalProps> = ({ cardData, onClos
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
+              title={`Switch view to breakdown ${tab.label.toLowerCase()}`}
               className={`px-4 py-2 text-xs font-bold rounded-t-lg transition-colors ${
                 activeTab === tab.id
                   ? 'bg-blue-600 text-white shadow'
@@ -125,6 +130,7 @@ export const DrillDownModal: React.FC<DrillDownModalProps> = ({ cardData, onClos
                         </td>
                         <td className="py-3">
                           <span
+                            title={`Department health status: ${row.status}`}
                             className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
                               row.status === 'Optimal'
                                 ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300'
@@ -184,6 +190,7 @@ export const DrillDownModal: React.FC<DrillDownModalProps> = ({ cardData, onClos
               {mockCountryBreakdown.map((c) => (
                 <div
                   key={c.name}
+                  title={`${c.name}: ${c.value} (${c.pct} of workforce)`}
                   className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-blue-900/60 flex items-center justify-between"
                 >
                   <div className="flex items-center space-x-3">
@@ -210,7 +217,10 @@ export const DrillDownModal: React.FC<DrillDownModalProps> = ({ cardData, onClos
 
           {activeTab === 'team' && (
             <div className="space-y-4">
-              <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 text-xs text-amber-800 dark:text-amber-200 flex items-center space-x-2">
+              <div
+                title="Privacy guarantee: Team IDs are pseudonymous to preserve HIPAA/GDPR rules"
+                className="p-3 rounded-lg bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 text-xs text-amber-800 dark:text-amber-200 flex items-center space-x-2 cursor-help"
+              >
                 <Icons.Lock className="w-4 h-4 shrink-0" />
                 <span>
                   Team-level metrics are de-identified (IDs generated pseudonymously) to guarantee individual privacy compliance.
@@ -220,6 +230,7 @@ export const DrillDownModal: React.FC<DrillDownModalProps> = ({ cardData, onClos
                 {mockTeamsDeidentified.map((t) => (
                   <div
                     key={t.id}
+                    title={`Team ${t.id} (${t.dept}): ${t.outcome}`}
                     className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-blue-900/60"
                   >
                     <div className="flex items-center justify-between mb-2">
@@ -249,6 +260,7 @@ export const DrillDownModal: React.FC<DrillDownModalProps> = ({ cardData, onClos
           <button
             type="button"
             onClick={onClose}
+            title="Close drill down panel"
             className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow"
           >
             Close Drill Down

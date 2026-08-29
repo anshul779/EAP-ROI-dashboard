@@ -112,11 +112,17 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={onToggleSidebar}
             className="lg:hidden p-2 rounded-lg bg-slate-100 dark:bg-[#102A4C] text-slate-700 dark:text-white border border-slate-200 dark:border-white/15"
             aria-label="Open navigation menu"
+            title="Open executive navigation drawer"
           >
             <Icons.Menu className="w-5 h-5" />
           </button>
-          <MantraCareLogo isDark={darkMode} size="md" />
-          <span className="hidden sm:inline-block px-2.5 py-1 rounded-full text-xs font-black bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 uppercase tracking-widest border border-blue-200 dark:border-blue-700">
+          <div title="MantraCare Enterprise ROI Platform Home">
+            <MantraCareLogo isDark={darkMode} size="md" />
+          </div>
+          <span
+            className="hidden sm:inline-block px-2.5 py-1 rounded-full text-xs font-black bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 uppercase tracking-widest border border-blue-200 dark:border-blue-700"
+            title="Enterprise level ROI analytics and benchmarking suite"
+          >
             ENTERPRISE ROI
           </span>
 
@@ -129,6 +135,7 @@ export const Header: React.FC<HeaderProps> = ({
                 setShowOrgDropdown(false);
                 setShowDateDropdown(false);
               }}
+              title="Filter dashboard by specific wellness program or select aggregate portfolio view"
               className="flex items-center space-x-1.5 px-3 py-2 rounded-xl bg-blue-50 dark:bg-[#102A4C] hover:bg-blue-100 dark:hover:bg-[#15365F] border border-blue-200 dark:border-white/15 text-sm font-bold text-blue-700 dark:text-blue-300 transition-all cursor-pointer"
             >
               <Icons.Activity className="w-3.5 h-3.5" />
@@ -149,6 +156,7 @@ export const Header: React.FC<HeaderProps> = ({
                       onProgramChange('all-programs');
                       setShowProgramDropdown(false);
                     }}
+                    title="View aggregate metrics across all active wellness programs"
                     className={`w-full text-left px-3 py-2 rounded-xl text-sm flex items-center justify-between transition-colors ${
                       selectedProgram === 'all-programs'
                         ? 'bg-blue-600 text-white font-bold'
@@ -204,7 +212,7 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
 
-        {/* Right Controls: Org Selector, Date Range, Filter, Export, Dark Mode */}
+        {/* Right Controls: Org Selector, Date Range, Filter, Export */}
         <div className="w-full md:w-auto flex flex-wrap items-center gap-1.5 sm:gap-2 md:gap-3 mt-2 md:mt-0 pt-2 md:pt-0 border-t border-slate-150 dark:border-white/10 md:border-t-0 justify-between md:justify-end shrink-0 min-w-0">
           {/* Org Selector */}
           <div ref={orgRef} className="relative">
@@ -215,6 +223,7 @@ export const Header: React.FC<HeaderProps> = ({
                 setShowProgramDropdown(false);
                 setShowDateDropdown(false);
               }}
+              title="Switch active enterprise organization account"
               className="flex items-center space-x-1.5 sm:space-x-2 px-2 sm:px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-[#102A4C] hover:bg-slate-200 dark:hover:bg-[#15365F] border border-slate-200 dark:border-white/15 text-sm font-bold text-slate-800 dark:text-white transition-colors max-w-[10rem]"
             >
               <Icons.Building2 className="w-4 h-4 text-blue-500" />
@@ -235,6 +244,7 @@ export const Header: React.FC<HeaderProps> = ({
                       onFilterChange({ organizationId: org.id });
                       setShowOrgDropdown(false);
                     }}
+                    title={`Select ${org.name} (${org.totalEmployees.toLocaleString()} employees)`}
                     className={`w-full text-left px-3 py-2 rounded-xl text-sm flex items-center justify-between transition-colors ${
                       org.id === filters.organizationId
                         ? 'bg-blue-600 text-white font-bold'
@@ -261,6 +271,7 @@ export const Header: React.FC<HeaderProps> = ({
                 setShowProgramDropdown(false);
                 setShowOrgDropdown(false);
               }}
+              title="Change analytical period and date timeframe"
               className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-[#102A4C] hover:bg-slate-200 dark:hover:bg-[#15365F] border border-slate-200 dark:border-white/15 text-sm font-bold text-slate-800 dark:text-white transition-colors"
             >
               <Icons.Calendar className="w-4 h-4 text-blue-500" />
@@ -279,6 +290,7 @@ export const Header: React.FC<HeaderProps> = ({
                         onFilterChange({ dateRange: opt as any });
                         setShowDateDropdown(false);
                       }}
+                      title={`Filter analytics by ${opt}`}
                       className={`w-full text-left px-3 py-1.5 rounded-xl text-sm font-semibold transition-colors ${
                         filters.dateRange === opt
                           ? 'bg-blue-600 text-white font-bold'
@@ -293,20 +305,19 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </div>
 
-
           {/* Global Filter Drawer Button */}
           <div className="relative group">
             <button
               type="button"
               onClick={onOpenGlobalFilters}
               className="flex items-center space-x-1.5 px-3.5 py-2 mantra-btn-primary text-sm shrink-0"
-              title="Advanced filters for demographics, departments, risk levels, and more"
+              title="Advanced filters for demographics, departments, risk levels, and locations"
             >
               <Icons.SlidersHorizontal className="w-4 h-4" />
               <span className="hidden md:inline">Filters</span>
             </button>
             <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
-              Advanced filters
+              Advanced filters (Demographics, BUs, Risk)
             </div>
           </div>
 
@@ -316,7 +327,7 @@ export const Header: React.FC<HeaderProps> = ({
               type="button"
               onClick={onOpenExport}
               className="flex items-center space-x-1.5 px-3.5 py-2 mantra-btn-secondary text-sm shrink-0"
-              title="Export dashboard as board-ready PDF or Excel"
+              title="Export executive ROI report as board-ready PDF or Excel file"
             >
               <Icons.Download className="w-4 h-4" />
               <span className="hidden lg:inline">Export Board PDF</span>
@@ -325,8 +336,6 @@ export const Header: React.FC<HeaderProps> = ({
               Export as PDF or Excel
             </div>
           </div>
-
-
         </div>
       </div>
     </header>

@@ -28,6 +28,7 @@ export const KPICard: React.FC<KPICardProps> = ({
   return (
     <div
       onClick={() => onDrillDown && onDrillDown(data)}
+      title={`Click to view detailed drill-down breakdown for ${data.title}`}
       className={`mantra-card mantra-card-hover relative flex flex-col justify-between cursor-pointer group overflow-hidden ${
         isHero ? 'px-4 py-5 sm:p-6 md:p-8' : 'px-4 py-5 sm:p-6'
       }`}
@@ -48,14 +49,20 @@ export const KPICard: React.FC<KPICardProps> = ({
         </div>
 
         {/* Signature MantraCare Circular Icon Badge */}
-        <div className="mantra-icon-badge w-11 h-11 shrink-0 ml-2 shadow-sm">
+        <div
+          className="mantra-icon-badge w-11 h-11 shrink-0 ml-2 shadow-sm"
+          title={`${data.title} category metric`}
+        >
           <IconComponent className="w-5 h-5 stroke-[2]" />
         </div>
       </div>
 
       {/* KPI Value & Trend Badge (Typography: 40–48px as specified in Redesign prompt) */}
       <div className="my-5 z-10">
-        <div className="flex items-baseline space-x-1">
+        <div
+          className="flex items-baseline space-x-1"
+          title={`Current ${data.title}: ${data.prefix || ''}${data.value}${data.suffix || ''}`}
+        >
           {data.prefix && (
             <span className="text-2xl md:text-3xl font-bold text-slate-500 dark:text-slate-400">
               {data.prefix}
@@ -74,6 +81,7 @@ export const KPICard: React.FC<KPICardProps> = ({
         {/* Trend Indicator Badge & Insight */}
         <div className="flex items-center space-x-2 mt-3">
           <span
+            title={`${data.isGoodTrend ? 'Positive' : 'Negative'} movement: ${data.change > 0 ? '+' : ''}${data.change}% compared to previous period benchmark`}
             className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${
               data.isGoodTrend
                 ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300'
@@ -88,7 +96,10 @@ export const KPICard: React.FC<KPICardProps> = ({
             {data.change > 0 ? `+${data.change}%` : `${data.change}%`}
           </span>
           {data.changeLabel && (
-            <span className="text-xs text-slate-500 dark:text-slate-300 font-medium truncate">
+            <span
+              className="text-xs text-slate-500 dark:text-slate-300 font-medium truncate"
+              title={`Context: ${data.changeLabel}`}
+            >
               {data.changeLabel}
             </span>
           )}
@@ -97,7 +108,10 @@ export const KPICard: React.FC<KPICardProps> = ({
 
       {/* Sparkline & Drill-down Footer */}
       <div className="mt-2 pt-4 border-t border-slate-100 dark:border-white/10 flex items-center justify-between z-10">
-        <div className="w-32 h-10 shrink-0">
+        <div
+          className="w-32 h-10 shrink-0"
+          title="Historical trend micro-chart over the selected period"
+        >
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={chartData}>
               <defs>
@@ -121,6 +135,7 @@ export const KPICard: React.FC<KPICardProps> = ({
 
         <button
           type="button"
+          title={`Click to open detailed breakdown and analytics for ${data.title}`}
           className="inline-flex items-center text-xs font-extrabold text-blue-600 dark:text-blue-400 group-hover:translate-x-1 transition-transform"
         >
           <span>Drill down</span>
